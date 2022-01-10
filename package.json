@@ -1,0 +1,23 @@
+{
+  "name": "guitare-jukebox",
+  "version": "1.0.0",
+  "description": "Twitch application to listen to song request on a channel",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JulienGasparLopes/guitare-jukebox.git"
+  },
+  "author": "JulienGL",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JulienGasparLopes/guitare-jukebox/issues"
+  },
+  "homepage": "https://github.com/JulienGasparLopes/guitare-jukebox#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
