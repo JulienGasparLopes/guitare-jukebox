@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Twitch application to listen to song request on a channel",
   "main": "main.js",
+  "type": "module",
   "scripts": {
     "start": "node main.js",
     "test": ""
@@ -18,6 +19,8 @@
   },
   "homepage": "https://github.com/JulienGasparLopes/guitare-jukebox#readme",
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "node-fetch": "^3.1.0",
+    "ws": "^8.4.0"
   }
 }
