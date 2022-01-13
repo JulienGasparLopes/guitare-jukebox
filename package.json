@@ -19,8 +19,12 @@
   },
   "homepage": "https://github.com/JulienGasparLopes/guitare-jukebox#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.2",
     "node-fetch": "^3.1.0",
     "ws": "^8.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.6.0"
   }
 }
