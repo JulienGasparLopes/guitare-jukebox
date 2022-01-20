@@ -1,4 +1,4 @@
-const REDIRECT_URL = "http://localhost:5000";
+const REDIRECT_URL = "http://localhost:5001";
 const SCOPES = "channel:read:redemptions";
 
 // Source: https://www.thepolyglotdeveloper.com/2015/03/create-a-random-nonce-string-using-javascript/
@@ -26,7 +26,7 @@ const code = urlParams.get("code");
 console.log("Code :", code);
 
 if (!code) {
-  fetch("http://localhost:5000/clientId").then(async (resp) => {
+  fetch("http://localhost:5001/clientId").then(async (resp) => {
     const parsedResponse = await resp.json();
     const clientId = parsedResponse.clientId;
 
