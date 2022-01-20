@@ -5,7 +5,8 @@ import express from "express";
 import fetch from "node-fetch";
 import { readFile } from "fs/promises";
 import WebSocket from "ws";
-import { exec } from "child_process";
+import * as readLine from "readline";
+import playSound from "play-sound";
 
 const PRIVATE_PORT = 5001;
 const PUBLIC_PORT = 80;
@@ -14,6 +15,7 @@ const main = async () => {
   const { clientId, clientSecret, userId, mongoUser, mongoPassword, mongoClusted } = JSON.parse(
     await readFile(new URL("../secrets.json", import.meta.url))
   );
+  let ws = undefined;
 
   const privateAdminApp = new express();
   privateAdminApp.use(express.static("./private"));
@@ -37,8 +39,23 @@ const main = async () => {
     console.log("Private server open, waiting for Admin connection");
   });
 
+  const consoleListener = readLine.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  consoleListener.on("line", (line) => {
+    if (["stop", "exit"].includes(line)) {
+      consoleListener.close();
+      privateListener.close();
+      ws.close();
+    } else {
+      console.log("Unknown command");
+    }
+  });
+
   const openPublicServer = (authCode) => {
-    const ws = new WebSocket("wss://pubsub-edge.twitch.tv");
+    ws = new WebSocket("wss://pubsub-edge.twitch.tv");
 
     // Source: https://www.thepolyglotdeveloper.com/2015/03/create-a-random-nonce-string-using-javascript/
     function nonce(length) {
@@ -78,7 +95,6 @@ const main = async () => {
 
     ws.on("message", function message(data) {
       const messageDict = JSON.parse(String(data));
-      console.log(messageDict);
       if (messageDict?.type == "MESSAGE" && messageDict?.data?.topic == `channel-points-channel-v1.${userId}`) {
         const parsedMessage = JSON.parse(messageDict.data.message);
         const redemptionInfo = parsedMessage.data.redemption;
@@ -88,8 +104,8 @@ const main = async () => {
         const redeemTitle = redemptionInfo.reward.title;
         const redeemCost = redemptionInfo.reward.cost;
         console.log(`${userName} redeemed ${redeemTitle} for a cost of ${redeemCost} with input ${userInput}`);
-        if (title === "Poulpy Buzzer") {
-          exec("afplay media/poulpy.mp3");
+        if (redeemTitle === "Poulpy Buzzer") {
+          playSound().play(media / poulpy.mp3);
         }
       }
     });
