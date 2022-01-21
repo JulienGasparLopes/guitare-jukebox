@@ -7,6 +7,7 @@ import { readFile } from "fs/promises";
 import WebSocket from "ws";
 import * as readLine from "readline";
 import playSound from "play-sound";
+import open from "open";
 
 const PRIVATE_PORT = 5001;
 const PUBLIC_PORT = 80;
@@ -37,6 +38,7 @@ const main = async () => {
 
   const privateListener = privateAdminApp.listen(PRIVATE_PORT, () => {
     console.log("Private server open, waiting for Admin connection");
+    open(`http://localhost:${PRIVATE_PORT}`, { app: { name: "google chrome" } });
   });
 
   const consoleListener = readLine.createInterface({
@@ -105,7 +107,7 @@ const main = async () => {
         const redeemCost = redemptionInfo.reward.cost;
         console.log(`${userName} redeemed ${redeemTitle} for a cost of ${redeemCost} with input ${userInput}`);
         if (redeemTitle === "Poulpy Buzzer") {
-          playSound().play(media / poulpy.mp3);
+          playSound().play("media/poulpy.mp3");
         }
       }
     });

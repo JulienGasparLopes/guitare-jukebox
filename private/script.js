@@ -43,7 +43,5 @@ if (!code) {
     window.location.replace(url);
   });
 } else {
-  fetch("http://localhost:5000/clientId", { method: "POST", body: { code } }).then((resp) =>
-    console.log("Code was sent")
-  );
+  window.close();
 }
